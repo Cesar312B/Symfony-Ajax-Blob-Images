@@ -1,19 +1,73 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}App!{% endblock %}</title>
+        <link rel="shortcut icon" href="https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.youtube.com/&size=16">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="{{ asset('boostrap/css/bootstrap.min.css') }}" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" >
+        <link rel="stylesheet" href="{{ asset('icons/css/all.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('datatables/css/datatables.min.css') }}">
         {% endblock %}
-
         {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+         <script src="{{ asset('boostrap/js/bootstrap.bundle.min.js') }}" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+         <script src="{{ asset('jquery/jquery-3.6.3.js') }}"></script>
+         <script src="{{ asset('jquery/jquery.min.js') }}"></script>
+         <script type="text/javascript" src="{{ asset('datatables/js/datatables.min.js') }}"></script>
+         <script type="text/javascript" src="{{ asset('datatables/js/pdfmake.min.js') }}"></script>
+         <script type="text/javascript" src="{{ asset('datatables/js/vfs_fonts.js') }}"></script>
+         <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+         <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
         {% endblock %}
     </head>
+ {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<a class="btn" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+<i class="fa-solid fa-bars"></i>
+</a>
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <img  class="rounded" width="20%" height="50%" src="{{app.user.displayPhoto}}" >
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">{{ app.user.Nombre }} {{ app.user.Apellido }}</h5>
+  <div class="btn-group">
+  <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+   style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .50rem;">
+  
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="{{ path('forgot') }}">Cambiar Contraseña</a></li>
+    <li><a class="dropdown-item" href="{{ path('user_profile', {'id': app.user.id}) }}">Editar Perfil</a></li>
+    <li><a class="dropdown-item" href="{{ path('app_logout') }}">Salir</a></li>
+  </ul>
+</div>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+
+  <ul class="list-group list-group-flush">
+  <li class="list-group-item">
+   <a href="{{ path('app_user_index') }}" class="nav-link">
+  <i class="fa fa-user-md" aria-hidden="true"></i>Medicos
+  </li>
+  <li class="list-group-item">
+    <a href="{{ path('app_paciente_index') }}" class="nav-link">
+                 <i class="fas fa-user-md"></i>
+                  Pacientes
+                </a>
+  </li>
+  
+  <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Ubicaciones</li>
+</ul>
+    </div>
+  </div>
+</div>
+{% endif %}
     <body>
-        {% block body %}{% endblock %}
+      <div class="page-content p-3 ">
+        {% block body %}
+        
+        {% endblock %}
+     </div>
     </body>
 </html>

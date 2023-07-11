@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Consulta{% endblock %}
+
+{% block body %}
+ 
+  
+  <div class="card mb-3" style="max-width: 750px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{ paciente.displayPhoto}}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ paciente.Nombre }} {{ paciente.Apellido }}</h5>
+        <p class="card-text">Cedula: {{ paciente.cedula }} </p>
+        <p class="card-text">Edad: {{ date('now').diff((date(paciente.fechaNacimiento))).format('%y años') }}</p>
+        <p class="card-text">Fecha de Nacimiento: {{ paciente.fechaNacimiento ? paciente.fechaNacimiento|date('Y-m-d') : '' }}</p>
+        <p class="card-text">Fecha de Ingreso: {{ paciente.fechaIngreso ? paciente.fechaIngreso|date('Y-m-d') : '' }}</p>
+        <p class="card-text">Sexo: {{paciente.sexo}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+    {{ include('consulta/_form.html.twig') }}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Motivo_consulta</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for consultum in consultas %}
+            <tr>
+                <td>{{ consultum.motivoConsulta }}</td>
+                <td>{{ consultum.fecha ? consultum.fecha|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_consulta_show', {'id': consultum.id}) }}">show</a>
+                    <a href="{{ path('app_consulta_edit', {'id': consultum.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_paciente_index') }}">back to list</a>
+{% endblock %}

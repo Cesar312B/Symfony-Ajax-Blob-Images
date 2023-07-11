@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <h1>Usuarios</h1>
+<div class="card">
+  <div class="card-body">
+   <a href="{{ path('app_register') }}"><i class="fa fa-plus-square" aria-hidden="true"></i></a>
+    <table id="example" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Imagen</th>
+                <th>Cedula</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Roles</th>
+                <th>Verificado</th>
+                <th>Activo</th>
+                <th>Fecha_registro</th> 
+                <th>Profesion</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+     
+                <td>{{ user.email }}</td>
+                <td>
+                  {% if  user.displayPhoto is defined and user.displayPhoto   is null  %}
+                   
+                  {% elseif user.displayPhoto is defined and user.displayPhoto is not null  %}
+                  <img  class="rounded" width="40%" height="60%" src="{{user.displayPhoto}}" >
+                  {% endif %}
+                </td>
+                <td>{{ user.cedula }}</td>
+                <td>{{ user.Nombre }}</td>
+                <td>{{ user.Apellido }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.isVerified ? 'No' : 'Si' }}</td>
+                <td>{{ user.isActive ? 'No' : 'Si' }}</td>
+                <td>{{ user.fechaRegistro ? user.fechaRegistro|date('Y-m-d') : '' }}</td>
+                <td>{{ user.Profesion }}</td>
+                <td>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="13">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </div>
+
+   
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script>
+$(document).ready(function () {
+    $('#example').DataTable({
+          responsive: true,
+          language: {
+            url:"{{ asset('datatables/js/Spanish.json') }}"
+        }
+    });
+});
+</script>
+{% endblock %}

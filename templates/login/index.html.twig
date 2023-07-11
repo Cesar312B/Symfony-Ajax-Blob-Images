@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+{{ parent() }}
+
+<div class="card">
+<div class="position-absolute top-0 start-50 translate-middle-x">
+<h1><i class="fa fa-user" aria-hidden="true"></i><h1>
+</div>
+</br>
+</br>
+<div class="card-body">
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+    <form action="{{ path('app_login') }}" method="post">
+     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email address</label>
+    <input type="email" class="form-control" id="username" name="_username" value="{{ last_username }}" aria-describedby="emailHelp">
+    <div id="emailHelp" class="form-text">Escriba un Email valido.</div>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" name="_password">
+  </div>
+  <input type="hidden" name="go_to" value="{{ path('app_welcom') }}">
+  <button type="submit" class="btn btn-primary">Iniciar Session</button>
+<p>No tienes una cuenta? <a href="{{ path('app_register') }}" class="link-info">Registrate aqui</a></p>
+<p>A olvidado la contraseña? <a href="{{ path('app_forgot_password_request') }}" class="link-info">Recuperela aqui</a></p>
+</form>
+
+</div>
+</div>
+{% endblock %}

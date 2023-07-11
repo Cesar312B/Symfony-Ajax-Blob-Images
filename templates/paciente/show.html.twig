@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paciente{% endblock %}
+
+{% block body %}
+    <h1>Paciente</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Foto</th>
+                <td><img  class="rounded" width="20%" height="40%" src="{{paciente.displayPhoto}}" ></td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ paciente.Nombre }}</td>
+            </tr>
+            <tr>
+                <th>Apellido</th>
+                <td>{{ paciente.Apellido }}</td>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td>{{ paciente.Sexo }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_nacimiento</th>
+                <td>{{ paciente.fechaNacimiento ? paciente.fechaNacimiento|date('Y-m-d') : '' }}</td>
+            </tr>
+             <tr>
+                <th>Fecha de Ingreso</th>
+                <td>{{ paciente.fechaIngreso ? paciente.fechaIngreso|date('Y-m-d') : '' }}</td>
+            </tr>
+              <tr>
+                <th>Edad</th>
+                <td>{{ date('now').diff((date(paciente.fechaNacimiento))).format('%y años') }}</td>
+            </tr>
+            <tr>
+                <th>Cedula</th>
+                <td>{{ paciente.cedula }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_paciente_index') }}">back to list</a>
+
+    <a href="{{ path('app_paciente_edit', {'id': paciente.id}) }}">edit</a>
+
+    {{ include('paciente/_delete_form.html.twig') }}
+{% endblock %}

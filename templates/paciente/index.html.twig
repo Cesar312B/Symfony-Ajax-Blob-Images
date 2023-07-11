@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paciente index{% endblock %}
+
+{% block body %}
+
+<div class="card">
+  <div class="card-body">
+  <h1>Pacientes</h1>
+  <a class="btn btn-primary btn-sm" href="{{ path('app_paciente_new') }}"><i class="fa-solid fa-user-plus"></i></a>
+  <div class="table-responsive" >
+    <table class="records_list table table-striped table-bordered table-hover w-100" id="mydatatable">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Cedula</th>
+                <th>Sexo</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Fecha Ingreso</th>
+                <th>Imagen</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th><input type="text" class="form-control" placeholder="Filtrar.." /></th>
+                <th><input type="text" class="form-control" placeholder="Filtrar.." /></th>
+                <th><input type="text" class="form-control" placeholder="Filtrar.." /></th>
+                <th><i class="fa-solid fa-person-half-dress"></i></th> 
+                <th><i class="fa-solid fa-calendar-days"></i></th> 
+                <th><i class="fa-solid fa-calendar-days"></i></th> 
+                <th><i class="fa-solid fa-image"></i></th>
+                <th><i class="fa-solid fa-screwdriver-wrench"></i></th> 
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+    </div>
+    </div>
+
+<style>
+#mydatatable tfoot input{
+    width: 100% !important;
+}
+#mydatatable tfoot {
+    display: table-header-group !important;
+}
+.dataTables_filter {
+	display: none;
+}
+/* Move tfood in the upper part of the table */
+tfoot {
+    display: table-header-group;
+}
+</style>
+    
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('js/paciente/read.js') }}"></script>
+{% endblock %}
